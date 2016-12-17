@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -55,12 +56,55 @@ namespace RetroBlocks.Model
 
         public void ReverseAllRows()
         {
-            
+            for (int i = 0; i <= _blockArray.GetUpperBound(0) ; i++)
+            {
+                for (int j = 0; j <= _blockArray.GetUpperBound(1) /2 ; j++)
+                {
+                    Block tempBlock = _blockArray[i, j];
+                    _blockArray[i, j] = _blockArray[i, _blockArray.GetUpperBound(1) - j];
+                    _blockArray[i, _blockArray.GetUpperBound(1) - j] = tempBlock;
+
+
+
+                }
+            }
         }
 
         public void ReverseAllColums()
         {
-            
+
+            for (int i = 0; i <= _blockArray.GetUpperBound(1); i++)
+            {
+                for (int j = 0; j <= _blockArray.GetUpperBound(0) / 2; j++)
+                {
+                    Block tempBlock = _blockArray[i, j];
+                    _blockArray[j, i] = _blockArray[_blockArray.GetUpperBound(1) - j, i ];
+                    _blockArray[_blockArray.GetUpperBound(1) - j, i] = tempBlock;
+
+
+
+                }
+            }
+
         }
+
+
+        public String ToString()
+        {
+            String output = "";
+
+            for (int i = 0; i < _blockArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < _blockArray.GetLength(1); j++)
+                {
+                    output += _blockArray[i, j] + ", ";
+                }
+
+                output += "\n";
+            }
+
+        }
+
+
     }
 }
