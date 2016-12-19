@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -89,7 +90,7 @@ namespace RetroBlocks.Model
         }
 
 
-        public String ToString()
+        public override String ToString()
         {
             String output = "";
 
@@ -103,7 +104,11 @@ namespace RetroBlocks.Model
                 output += "\n";
             }
 
+            return output;
+
         }
+
+       
 
 
     }

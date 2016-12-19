@@ -97,3 +97,21 @@
 /processorParam:TextureFormat=Color
 /build:yellow.bmp
 
+#begin VT-323_36.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:VT-323_36.spritefont
+
+#begin VT-323_50.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:VT-323_50.spritefont
+
+#begin VT-323_20.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:VT-323_20.spritefont
+
