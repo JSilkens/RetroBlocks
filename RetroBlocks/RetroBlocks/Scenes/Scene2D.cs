@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace RetroBlocks.Scenes
 {
-    class Scene2D : DrawableGameComponent
+    public class Scene2D : DrawableGameComponent
     {
         protected List<GameComponent> components;
         protected Rectangle screenBounds;

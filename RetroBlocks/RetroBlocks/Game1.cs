@@ -34,6 +34,8 @@ namespace RetroBlocks
         // Scenes
         private Scene2D activeScene; //keep track of which scene is active
         private StartScene startScene;
+        private GameScene _gameScene;
+        private CreditScene _creditScene;
 
         //Menu
         private SpriteFont _menuFont;
@@ -45,6 +47,9 @@ namespace RetroBlocks
 
         //Backgrounds
         private Texture2D _backgroundTexture;
+
+        //Misc
+        private bool firstStart = true;
 
 
         public Game1()
@@ -94,8 +99,11 @@ namespace RetroBlocks
             startScene = new StartScene(this,_menuFont,_backgroundTexture, _selectEffect);
             Components.Add(startScene);
 
-//            startScene.Show();
-//            activeScene = startScene;
+            //Credit scene 
+            _creditScene = new CreditScene(this,_menuFont,_backgroundTexture);
+            Components.Add(_creditScene);
+
+
 
 
         }
@@ -116,30 +124,79 @@ namespace RetroBlocks
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+//            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+//                Exit();
 
             // TODO: Add your update logic here
-            LoadStartScene(gameTime);
-
+            TitleScreenTimer(gameTime);
+            HandleInput(gameTime);
 
             base.Update(gameTime);
         }
 
-        private void LoadStartScene(GameTime gameTime)
+        private void HandleInput(GameTime gameTime)
+        {
+            if (_creditScene.EscEntered)
+            {
+                _creditScene.Hide();
+                //activeScene = null;
+                LoadStartScene(gameTime);
+            }
+            if ( startScene.SelectedMenuIndex == 2)
+            {
+                startScene.SelectedMenuIndex = -1;
+                LoadCreditScene(gameTime);
+            }
+
+            if (startScene.SelectedMenuIndex == 1)
+            {
+                LoadSinglePlayerScene(gameTime);
+            }
+        }
+
+        private void LoadSinglePlayerScene(GameTime gameTime)
+        {
+            //todo create SinglePlayerGameScene
+
+        }
+
+        private void TitleScreenTimer(GameTime gameTime)
         {
             
             currentTime += (float) gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (currentTime >= duration)
+            if (currentTime >= duration && firstStart)
             {
+                firstStart = false;
                //load startscene
-               startScene.Show();
-                activeScene = startScene;
+                LoadStartScene(gameTime);
+               
             }
             
            
 
+
+        }
+
+        private void LoadStartScene(GameTime gameTime)
+        {
+            startScene.SelectedMenuIndex = -1;
+            startScene.Show();
+            activeScene = startScene;
+            
+        }
+
+        private void LoadCreditScene(GameTime gameTime)
+        {
+            activeScene?.Hide();
+            activeScene = _creditScene;
+            _creditScene.Show();
+            if (_creditScene.EscEntered)
+            {
+                _creditScene.Hide();
+                //activeScene = null;
+                LoadStartScene(gameTime);
+            }
 
         }
 

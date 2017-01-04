@@ -38,7 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BlockManager.cs" />
+    <Compile Include="Managers\BlockManager.cs" />
     <Compile Include="Drawables\BlockTexture.cs" />
     <Compile Include="Drawables\Component2D.cs" />
     <Compile Include="Drawables\TextMenu.cs" />
@@ -52,7 +52,10 @@
     <Compile Include="Model\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenes\CreditScene.cs" />
+    <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\Scene2D.cs" />
+    <Compile Include="Scenes\SinglePlayerScene.cs" />
     <Compile Include="Scenes\StartScene.cs" />
   </ItemGroup>
   <ItemGroup>

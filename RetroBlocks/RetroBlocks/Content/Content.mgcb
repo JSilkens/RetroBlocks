@@ -157,3 +157,9 @@
 /processorParam:TextureFormat=Color
 /build:background.gif
 
+#begin enter.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:enter.wav
+

@@ -109,5 +109,13 @@ namespace RetroBlocks.Drawables
             get { return selectEffect; }
             set { selectEffect = value; }
         }
+
+        public KeyboardState OldKeyboardState
+        {
+            get { return oldKeyboardState; }
+            set { oldKeyboardState = value; }
+        }
+
+        
     }
 }
