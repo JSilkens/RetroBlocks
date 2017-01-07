@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using OpenTK.Graphics.OpenGL;
+using RetroBlocks.Model;
 using RetroBlocks.Scenes;
+using RetroBlocks.Services;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
@@ -18,6 +22,9 @@ namespace RetroBlocks
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        //Fonts
+        private List<SpriteFont> _fontlList; 
 
         //Title fonts
         private String _titleText;
@@ -62,6 +69,8 @@ namespace RetroBlocks
             // Title screen
             _titleText = "R E T R O  B L O C K S";
             _subtitleText = "B Y  J O H A N   S I L K E N S";
+
+            _fontlList = new List<SpriteFont>();
             
         }
 
@@ -92,6 +101,9 @@ namespace RetroBlocks
             _titleFont = Content.Load<SpriteFont>("VT-323_50");
             _subTitleFont = Content.Load<SpriteFont>("VT-323_36");
             _menuFont = Content.Load<SpriteFont>("VT-323_36");
+            _fontlList.Add(Content.Load<SpriteFont>("VT-323_50"));
+            _fontlList.Add(Content.Load<SpriteFont>("VT-323_36"));
+            _fontlList.Add(Content.Load<SpriteFont>("VT-323_20"));
             _selectEffect = Content.Load<SoundEffect>("select");
             _backgroundTexture = Content.Load<Texture2D>("background");
 
@@ -102,6 +114,10 @@ namespace RetroBlocks
             //Credit scene 
             _creditScene = new CreditScene(this,_menuFont,_backgroundTexture);
             Components.Add(_creditScene);
+
+            //Game scene
+            _gameScene = new GameScene(this, _backgroundTexture,_fontlList);
+            Components.Add(_gameScene);
 
 
 
@@ -148,8 +164,9 @@ namespace RetroBlocks
                 LoadCreditScene(gameTime);
             }
 
-            if (startScene.SelectedMenuIndex == 1)
+            if (startScene.SelectedMenuIndex == 0)
             {
+                startScene.SelectedMenuIndex = -1;
                 LoadSinglePlayerScene(gameTime);
             }
         }
@@ -158,6 +175,18 @@ namespace RetroBlocks
         {
             //todo create SinglePlayerGameScene
 
+            //Load standard tetris game
+            LoadGameScene(gameTime);
+
+        }
+
+        private void LoadGameScene(GameTime gameTime)
+        {
+           //For now attach standardgame service automatically
+           _gameScene.GameService = new StandardGameService(new Player("player"), 1);
+            activeScene.Hide();
+            _gameScene.Show();
+            activeScene = _gameScene;
         }
 
         private void TitleScreenTimer(GameTime gameTime)

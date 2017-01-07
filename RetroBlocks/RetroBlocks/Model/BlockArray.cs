@@ -18,25 +18,66 @@ namespace RetroBlocks.Model
         {
             //by default create a 4x4 array
             _blockArray = new Block[4, 4];
+            Fill();
 
         }
 
-        public BlockArray(int height,int width)
+        public BlockArray(int row,int col)
         {
-            _blockArray = new Block[width,height];
+            _blockArray = new Block[row,col];
+            Fill();
         }
 
 
-        public Block Get(int x, int y)
+        public Block Get(int row, int col)
         {
-            return _blockArray[x, y];
+            return _blockArray[row, col]; 
 
     
         }
 
+        private void Fill()
+        {
+            for (int i = 0; i < _blockArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < _blockArray.GetLength(1); j++)
+                {
+                    _blockArray[i,j] = new Block(BlockType.EMPTY, false);
+                }
+            }
+        }
+
+        public int RowCount()
+        {
+            return _blockArray.GetLength(0);
+        }
+
+        public int ColumnCount()
+        {
+            return _blockArray.GetLength(1);
+        }
+
         public void Add(int x, int y, Block b)
         {
-            _blockArray[x, y] = b;
+            if (b.Type != BlockType.EMPTY)
+            {
+                _blockArray[x, y] = b;
+            }
+            
+        }
+
+        public void RemoveNonPlaced()
+        {
+            for (int i = 0; i < _blockArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < _blockArray.GetLength(1); j++)
+                {
+                    if (_blockArray[i, j].Type != BlockType.EMPTY && _blockArray[i, j].IsPlaced == false)
+                    {
+                        _blockArray[i, j] = new Block(BlockType.EMPTY, false);
+                    }
+                }
+            }
         }
 
 
@@ -98,7 +139,15 @@ namespace RetroBlocks.Model
             {
                 for (int j = 0; j < _blockArray.GetLength(1); j++)
                 {
-                    output += _blockArray[i, j] + ", ";
+                    if (_blockArray[i, j].Type == BlockType.EMPTY)
+                    {
+                        output += ". ";
+                    }
+                    else
+                    {
+                        output += "x ";
+                    }
+                    //output += _blockArray[i, j] + ", ";
                 }
 
                 output += "\n";

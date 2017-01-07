@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RetroBlocks.Model
 {
-    class Player
+    public class Player
     {
         private int _score;
         private int _highScore;
@@ -15,6 +15,7 @@ namespace RetroBlocks.Model
 
         public Player(string name)
         {
+            
             Name = name;
             _score = 0;
         }
@@ -24,7 +25,7 @@ namespace RetroBlocks.Model
             get { return _score; }
             set
             {
-                if (Score < 0 )
+                if (value < 0 )
                 {
                     throw new ArgumentException("Score cannot be lower than zero.");
                 }
@@ -47,7 +48,7 @@ namespace RetroBlocks.Model
             get { return _name; }
             set
             {
-                if (string.IsNullOrEmpty(Name))
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("Player name cannot be empty");
                 }

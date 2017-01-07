@@ -73,10 +73,10 @@ namespace RetroBlocks.Model
 
         private void CreateTPiece()
         {
-            _blockGrid.Add(1, 1, Block.BLUE);
-            _blockGrid.Add(2, 1, Block.BLUE);
-            _blockGrid.Add(3, 1, Block.BLUE);
-            _blockGrid.Add(2, 2, Block.BLUE);
+            _blockGrid.Add(1, 1, new Block(BlockType.BLUE, false));
+            _blockGrid.Add(1, 2, new Block(BlockType.BLUE, false));
+            _blockGrid.Add(1, 3, new Block(BlockType.BLUE, false));
+            _blockGrid.Add(2, 2, new Block(BlockType.BLUE, false));
 
         }
 
@@ -90,10 +90,10 @@ namespace RetroBlocks.Model
 
         private void CreateLPiece()
         {
-            _blockGrid.Add(1, 1, Block.LGREEN);
-            _blockGrid.Add(1, 2, Block.LGREEN);
-            _blockGrid.Add(1, 3, Block.LGREEN);
-            _blockGrid.Add(2, 1, Block.LGREEN);
+            _blockGrid.Add(1, 1, new Block(BlockType.LGREEN, false));
+            _blockGrid.Add(1, 2, new Block(BlockType.LGREEN, false));
+            _blockGrid.Add(1, 3, new Block(BlockType.LGREEN, false));
+            _blockGrid.Add(2, 1, new Block(BlockType.LGREEN, false));
 
         }
 
@@ -107,10 +107,10 @@ namespace RetroBlocks.Model
 
         private void CreateJPiece()
         {
-            _blockGrid.Add(1, 1, Block.GREEN);
-            _blockGrid.Add(2, 1, Block.GREEN);
-            _blockGrid.Add(3, 1, Block.GREEN);
-            _blockGrid.Add(3, 2, Block.GREEN);
+            _blockGrid.Add(1, 1, new Block(BlockType.GREEN, false));
+            _blockGrid.Add(1, 2, new Block(BlockType.GREEN, false));
+            _blockGrid.Add(1, 3, new Block(BlockType.GREEN, false));
+            _blockGrid.Add(2, 3, new Block(BlockType.GREEN, false));
         }
 
         /*
@@ -123,10 +123,10 @@ namespace RetroBlocks.Model
 
         private void CreateSPiece()
         {
-            _blockGrid.Add(2, 1, Block.PINK);
-            _blockGrid.Add(3, 1, Block.PINK);
-            _blockGrid.Add(1, 2, Block.PINK);
-            _blockGrid.Add(2, 2, Block.PINK);
+            _blockGrid.Add(1, 2, new Block(BlockType.PINK, false));
+            _blockGrid.Add(1, 3, new Block(BlockType.PINK, false));
+            _blockGrid.Add(2, 1, new Block(BlockType.PINK, false));
+            _blockGrid.Add(2, 2, new Block(BlockType.PINK, false));
         }
 
 
@@ -139,10 +139,10 @@ namespace RetroBlocks.Model
         */
         private void CreateZPiece()
         {
-            _blockGrid.Add(1, 1, Block.RED);
-            _blockGrid.Add(2, 1, Block.RED);
-            _blockGrid.Add(2, 2, Block.RED);
-            _blockGrid.Add(3, 2, Block.RED);
+            _blockGrid.Add(1, 1, new Block(BlockType.RED, false));
+            _blockGrid.Add(1, 2, new Block(BlockType.RED, false));
+            _blockGrid.Add(2, 2, new Block(BlockType.RED, false));
+            _blockGrid.Add(2, 3, new Block(BlockType.RED, false));
         }
 
         /*
@@ -154,10 +154,10 @@ namespace RetroBlocks.Model
         */
         private void CreateOPiece()
         {
-            _blockGrid.Add(1,1,Block.YELLOW);
-            _blockGrid.Add(2,1, Block.YELLOW);
-            _blockGrid.Add(1,2, Block.YELLOW);
-            _blockGrid.Add(2,2, Block.YELLOW);
+            _blockGrid.Add(1,1, new Block(BlockType.YELLOW, false));
+            _blockGrid.Add(1,2, new Block(BlockType.YELLOW, false));
+            _blockGrid.Add(2,1, new Block(BlockType.YELLOW, false));
+            _blockGrid.Add(2,2, new Block(BlockType.YELLOW, false));
         }
 
 
@@ -171,10 +171,10 @@ namespace RetroBlocks.Model
         private void CreateIPiece()
         {
            
-                _blockGrid.Add(0, 1,Block.LBLUE);
-                _blockGrid.Add(1, 1, Block.LBLUE);
-                _blockGrid.Add(2, 1, Block.LBLUE);
-                _blockGrid.Add(3, 1, Block.LBLUE);
+                _blockGrid.Add(1, 0, new Block(BlockType.LBLUE, false));
+                _blockGrid.Add(1, 1, new Block(BlockType.LBLUE, false));
+                _blockGrid.Add(1, 2, new Block(BlockType.LBLUE, false));
+                _blockGrid.Add(1, 3, new Block(BlockType.LBLUE, false));
         }
 
         public BlockArray BlockGrid
