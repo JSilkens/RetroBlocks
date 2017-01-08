@@ -28,6 +28,7 @@ namespace RetroBlocks.Services
 
         public void Play(GameTime gameTime)
         {
+            
             elapsedTime +=  gameTime.ElapsedGameTime.TotalMilliseconds;
             //Debug.Print(elapsedTime + "");
             if (elapsedTime >= duration)
@@ -41,12 +42,16 @@ namespace RetroBlocks.Services
                 else if (Board.NonPlacedBlocksInBoard())
                 {
                     Board.DropBlock();
+                    PlayerOne.Score++;
                 }
                 else
                 {
+                    //reset board for new piece
                     Board.Droplocation = new Vector2(0, 3);
+                    Board.StopDrop = false;
                     Board.CreateRandomPiece();
                     Board.DropBlock();
+                    PlayerOne.Score += 3;
                 }
                 Board.PrintBoard();
                 elapsedTime = 0;
@@ -54,6 +59,20 @@ namespace RetroBlocks.Services
            
             
                     
+        }
+
+        public bool CheckGameOver()
+        {
+            for (int i = 0; i < Board.Width(); i++)
+            {
+
+                if (Board.RowHeight(i) >=15 )
+                {
+                    return true;
+                }
+            }
+        
+            return false;
         }
 
 

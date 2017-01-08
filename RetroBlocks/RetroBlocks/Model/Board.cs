@@ -12,9 +12,7 @@ namespace RetroBlocks.Model
 {
     class Board
     {
-        private BlockArray _gameBoardArray;
         private Player _player;
-        bool _stopDrop = false;
         int rowLoc;
         int colLoc;
 
@@ -22,14 +20,11 @@ namespace RetroBlocks.Model
         public Board(Player player)
         {
             _player = player;
-            _gameBoardArray = new BlockArray(24, 10);
+            GameBoardArray = new BlockArray(24, 10);
             Droplocation = new Vector2(0,3);
         }
 
-        public void Play()
-        {
-
-        }
+      
 
         public void CreateRandomPiece()
         {
@@ -74,14 +69,14 @@ namespace RetroBlocks.Model
         {
             
            
-            int rowCount = _gameBoardArray.RowCount();
-            int colCount = _gameBoardArray.ColumnCount();
+            int rowCount = GameBoardArray.RowCount();
+            int colCount = GameBoardArray.ColumnCount();
             //Remove all non placed blocks
-            _gameBoardArray.RemoveNonPlaced();
+            GameBoardArray.RemoveNonPlaced();
 
             
             //Draw piece in board
-            if (_stopDrop == false)
+            if (StopDrop == false)
             {
                 for (int i = 0; i < CurrentPiece.BlockGrid.RowCount(); i++)
                 {
@@ -91,13 +86,13 @@ namespace RetroBlocks.Model
                         colLoc = (int)Droplocation.Y + j;
                         if (rowCount > rowLoc)
                         {
-                            if (_gameBoardArray.Get(rowLoc, colLoc).Type == BlockType.EMPTY)
+                            if (GameBoardArray.Get(rowLoc, colLoc).Type == BlockType.EMPTY)
                             {
-                                _gameBoardArray.Add(rowLoc, colLoc, CurrentPiece.BlockGrid.Get(i, j));
+                                GameBoardArray.Add(rowLoc, colLoc, CurrentPiece.BlockGrid.Get(i, j));
                             }
                             else
                             {
-                                _stopDrop = true;
+                                StopDrop = true;
                             }
                             
 
@@ -105,7 +100,7 @@ namespace RetroBlocks.Model
                         }
                         else
                         {
-                            _stopDrop = true;
+                            StopDrop = true;
                         }
 
                     }
@@ -114,7 +109,7 @@ namespace RetroBlocks.Model
             
 
             //Drop the piece further down until the end of the board or when it reached an placed block
-            if (_stopDrop)
+            if (StopDrop)
             {
                 //Set the blocks as placed
                 SetBlocksAsPlaced();
@@ -130,13 +125,13 @@ namespace RetroBlocks.Model
 
         private void SetBlocksAsPlaced()
         {
-            for (int i = 0; i <_gameBoardArray.RowCount(); i++)
+            for (int i = 0; i <GameBoardArray.RowCount(); i++)
             {
-                for (int j = 0; j < _gameBoardArray.ColumnCount(); j++)
+                for (int j = 0; j < GameBoardArray.ColumnCount(); j++)
                 {
-                    if (_gameBoardArray.Get(i,j).Type != BlockType.EMPTY)
+                    if (GameBoardArray.Get(i,j).Type != BlockType.EMPTY)
                     {
-                        _gameBoardArray.Get(i,j).IsPlaced = true;
+                        GameBoardArray.Get(i,j).IsPlaced = true;
                     }
                 }
             }
@@ -145,11 +140,11 @@ namespace RetroBlocks.Model
         public bool NonPlacedBlocksInBoard()
         {
             
-            for (int i = 0; i < _gameBoardArray.RowCount(); i++)
+            for (int i = 0; i < GameBoardArray.RowCount(); i++)
             {
-                for (int j = 0; j < _gameBoardArray.ColumnCount(); j++)
+                for (int j = 0; j < GameBoardArray.ColumnCount(); j++)
                 {
-                    if (_gameBoardArray.Get(i,j).IsPlaced == false && _gameBoardArray.Get(i,j).Type != BlockType.EMPTY)
+                    if (GameBoardArray.Get(i,j).IsPlaced == false && GameBoardArray.Get(i,j).Type != BlockType.EMPTY)
                     {
                         return true;
                     }
@@ -162,11 +157,11 @@ namespace RetroBlocks.Model
 
         public bool IsEmpty()
         {
-            for (int i = 0; i < _gameBoardArray.RowCount(); i++)
+            for (int i = 0; i < GameBoardArray.RowCount(); i++)
             {
-                for (int j = 0; j < _gameBoardArray.ColumnCount(); j++)
+                for (int j = 0; j < GameBoardArray.ColumnCount(); j++)
                 {
-                    if (_gameBoardArray.Get(i, j).Type != BlockType.EMPTY)
+                    if (GameBoardArray.Get(i, j).Type != BlockType.EMPTY)
                     {
                         return false;
                     }
@@ -176,6 +171,18 @@ namespace RetroBlocks.Model
 
             return true;
         }
+
+        public int RowHeight(int colNr)
+        {
+            return GameBoardArray.RowHeight(colNr);
+        }
+
+        public int ColHeight(int rowNr)
+        {
+            return GameBoardArray.ColHeight(rowNr);
+        }
+
+       
 
 
         /* 
@@ -199,8 +206,18 @@ namespace RetroBlocks.Model
 
         public void PrintBoard()
         {
-            Debug.WriteLine(_gameBoardArray.ToString());
+            Debug.WriteLine(GameBoardArray.ToString());
             Debug.WriteLine(" == End of board ==");
+        }
+
+        public int Height()
+        {
+            return GameBoardArray.RowCount();
+        }
+
+        public int Width()
+        {
+            return GameBoardArray.ColumnCount();
         }
 
         public Vector2 Droplocation { get; set; }
@@ -209,9 +226,13 @@ namespace RetroBlocks.Model
 
         public Piece CurrentPiece { get; set; }
 
+        public bool StopDrop { get; set; } = false;
+
+        public BlockArray GameBoardArray { get; set; }
+
         public override string ToString()
         {
-           return _gameBoardArray.ToString();
+           return GameBoardArray.ToString();
         }
     }
 }

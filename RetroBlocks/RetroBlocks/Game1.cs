@@ -57,6 +57,8 @@ namespace RetroBlocks
 
         //Misc
         private bool firstStart = true;
+        
+
 
 
         public Game1()
@@ -71,6 +73,7 @@ namespace RetroBlocks
             _subtitleText = "B Y  J O H A N   S I L K E N S";
 
             _fontlList = new List<SpriteFont>();
+            
             
         }
 
@@ -106,6 +109,8 @@ namespace RetroBlocks
             _fontlList.Add(Content.Load<SpriteFont>("VT-323_20"));
             _selectEffect = Content.Load<SoundEffect>("select");
             _backgroundTexture = Content.Load<Texture2D>("background");
+            
+
 
             // Main menu scene
             startScene = new StartScene(this,_menuFont,_backgroundTexture, _selectEffect);
@@ -184,6 +189,7 @@ namespace RetroBlocks
         {
            //For now attach standardgame service automatically
            _gameScene.GameService = new StandardGameService(new Player("player"), 1);
+            _gameScene.GameService.InGame = true;
             activeScene.Hide();
             _gameScene.Show();
             activeScene = _gameScene;

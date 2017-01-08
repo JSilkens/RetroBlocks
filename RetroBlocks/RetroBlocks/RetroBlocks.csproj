@@ -38,8 +38,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Drawables\BoardTexture.cs" />
     <Compile Include="Managers\BlockManager.cs" />
-    <Compile Include="Drawables\BlockTexture.cs" />
     <Compile Include="Drawables\Component2D.cs" />
     <Compile Include="Drawables\TextMenu.cs" />
     <Compile Include="Factories\MenuFactory.cs" />

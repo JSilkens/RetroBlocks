@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace RetroBlocks.Drawables
 {
-    class Component2D : DrawableGameComponent
+    public class Component2D : DrawableGameComponent
     {
         protected Texture2D texture;
         protected Vector2 position = new Vector2();

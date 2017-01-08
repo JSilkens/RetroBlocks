@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,6 +20,8 @@ namespace RetroBlocks.Scenes
     public class GameScene : Scene2D
     {
         private Texture2D t;
+        private BoardTexture boardTexture;
+        private bool boardInit = false;
         
 
         public GameScene(Game game,Texture2D bacgroundTexture , List<SpriteFont> fontList ) : base(game)
@@ -30,6 +33,9 @@ namespace RetroBlocks.Scenes
                 new Color[] { Color.White });// fill the texture with white
 
             Fontlist = fontList;
+            boardTexture = new BoardTexture(game);
+            
+           
            
 
         }
@@ -45,9 +51,11 @@ namespace RetroBlocks.Scenes
         private Texture2D BackgroundTexture { get; set; }
 
         public List<SpriteFont> Fontlist { get; set; }
+        public KeyboardState oldKeyboardState { get; private set; }
 
         public override void Initialize()
         {
+            
             base.Initialize();
         }
 
@@ -55,23 +63,37 @@ namespace RetroBlocks.Scenes
         //Moves blocks
         public override void Update(GameTime gameTime)
         {
-            InitBoard();
-            HandleScenesInput();
-            GetStandardGameService().Play(gameTime);
-           // RefreshBoard();
+            if (boardInit == false)
+            {
+                Game.Components.Add(boardTexture);
+                boardInit = true;
+            }
+            if (GameService.InGame)
+            {
+                
+                InitBoard();
+                if (GetStandardGameService().CheckGameOver() == false)
+                {
+                    HandleScenesInput();
+                    GetStandardGameService().Play(gameTime);
+                    boardTexture.BoardArray = GetStandardGameService().Board.GameBoardArray;
+                }
+                else
+                {
+                    MessageBox.Show("Game Over");
+                    GameService.InGame = false;
+                }
+            }
+
+           
+           
+           
             base.Update(gameTime);
         }
 
-        private void RefreshBoard()
-        {
-            Debug.WriteLine(GetStandardGameService().Board.ToString());
-            Debug.WriteLine(" == End of board ==");
-        }
+        
 
-        private void PlayGame()
-        {
-          GetStandardGameService().Board.DropBlock();
-        }
+       
 
         private void InitBoard()
         {
@@ -86,7 +108,38 @@ namespace RetroBlocks.Scenes
 
         private void HandleScenesInput()
         {
-            
+            bool goLeft, goRight, rotateLeft, rotateRight;
+            Vector2 oldDropLocation = GetStandardGameService().Board.Droplocation;
+            KeyboardState keyBoardState = Keyboard.GetState();
+
+            goLeft = oldKeyboardState.IsKeyUp(Keys.Left) && keyBoardState.IsKeyDown(Keys.Left);
+            goRight = oldKeyboardState.IsKeyUp(Keys.Right) && keyBoardState.IsKeyDown(Keys.Right);
+            rotateLeft = oldKeyboardState.IsKeyUp(Keys.Z) && keyBoardState.IsKeyDown(Keys.Z);
+            rotateRight = oldKeyboardState.IsKeyUp(Keys.C) && keyBoardState.IsKeyDown(Keys.C);
+
+
+
+            if (goLeft)
+            {
+             GetStandardGameService().Board.Droplocation = new Vector2(oldDropLocation.X , oldDropLocation.Y -1);
+            }
+
+            if (goRight)
+            {
+             GetStandardGameService().Board.Droplocation = new Vector2(oldDropLocation.X, oldDropLocation.Y + 1);
+            }
+
+            if (rotateLeft)
+            {
+                GetStandardGameService().Board.CurrentPiece.RotateLeft();
+            }
+
+            if (rotateRight)
+            {
+                GetStandardGameService().Board.CurrentPiece.RotateRight();
+            }
+
+            oldKeyboardState = keyBoardState;
         }
 
         public override void Draw(GameTime gameTime)

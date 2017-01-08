@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
@@ -11,7 +12,7 @@ using Microsoft.Xna.Framework;
 
 namespace RetroBlocks.Model
 {
-    class BlockArray
+    public class BlockArray
     {
         private Block[,] _blockArray;
         public BlockArray()
@@ -115,19 +116,47 @@ namespace RetroBlocks.Model
         public void ReverseAllColums()
         {
 
-            for (int i = 0; i <= _blockArray.GetUpperBound(1); i++)
+//            for (int i = 0; i <= _blockArray.GetUpperBound(1); i++)
+//            {
+//                for (int j = 0; j <= _blockArray.GetUpperBound(0) / 2; j++)
+//                {
+//                    Block tempBlock = _blockArray[i, j];
+//                    _blockArray[j, i] = _blockArray[_blockArray.GetUpperBound(1) - j, i ];
+//                    _blockArray[_blockArray.GetUpperBound(1) - j, i] = tempBlock;
+//
+//
+//
+//                }
+//            }
+
+        }
+
+        public int ColHeight(int rowNr)
+        {
+            int count = 0;
+
+            for (int i = 0; i < RowCount(); i++)
             {
-                for (int j = 0; j <= _blockArray.GetUpperBound(0) / 2; j++)
+                if (_blockArray[rowNr, i].IsPlaced && _blockArray[rowNr, i].Type != BlockType.EMPTY)
                 {
-                    Block tempBlock = _blockArray[i, j];
-                    _blockArray[j, i] = _blockArray[_blockArray.GetUpperBound(1) - j, i ];
-                    _blockArray[_blockArray.GetUpperBound(1) - j, i] = tempBlock;
-
-
-
+                    count++;
                 }
             }
+            return count;
+        }
 
+        public int RowHeight(int colNr)
+        {
+            int count = 0;
+
+            for (int i = 0; i < RowCount(); i++)
+            {
+                if (_blockArray[i, colNr].IsPlaced)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
 
@@ -152,6 +181,13 @@ namespace RetroBlocks.Model
 
                 output += "\n";
             }
+
+            for (int i = 0; i < _blockArray.GetLength(1); i++)
+            {
+                output += RowHeight(i) + " ";
+            }
+
+            output += "\n";
 
             return output;
 
