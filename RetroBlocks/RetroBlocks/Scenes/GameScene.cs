@@ -12,6 +12,7 @@ using OpenTK.Graphics.OpenGL;
 using RetroBlocks.Drawables;
 using RetroBlocks.Factories;
 using RetroBlocks.Services;
+using RetroBlocks.Utilities;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 
@@ -22,6 +23,7 @@ namespace RetroBlocks.Scenes
         private Texture2D t;
         private BoardTexture boardTexture;
         private bool boardInit = false;
+        private ScoreReaderWriter scoreReaderWriter;
         
 
         public GameScene(Game game,Texture2D bacgroundTexture , List<SpriteFont> fontList ) : base(game)
@@ -34,6 +36,7 @@ namespace RetroBlocks.Scenes
 
             Fontlist = fontList;
             boardTexture = new BoardTexture(game);
+            scoreReaderWriter = new ScoreReaderWriter();
             
            
            
@@ -82,6 +85,8 @@ namespace RetroBlocks.Scenes
                 {
                     MessageBox.Show("Game Over");
                     GameService.InGame = false;
+                    //Write score to xml
+                    WriteScoretoFile();
                 }
             }
 
@@ -91,9 +96,11 @@ namespace RetroBlocks.Scenes
             base.Update(gameTime);
         }
 
-        
+        private void WriteScoretoFile()
+        {
+            scoreReaderWriter.WriteHighScoreToXml(GameService.PlayerOne);
+        }
 
-       
 
         private void InitBoard()
         {

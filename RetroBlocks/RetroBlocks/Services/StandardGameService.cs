@@ -12,7 +12,7 @@ namespace RetroBlocks.Services
     class StandardGameService : GameService
     {
         private double elapsedTime;
-        private double duration = 1000; // 1 second in milliseconds
+        private double duration = 500; // 0.5 second in milliseconds
         public StandardGameService(Player playerOne , int level) : base(playerOne ,level)
         {
             
